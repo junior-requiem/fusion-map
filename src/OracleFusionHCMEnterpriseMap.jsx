@@ -1,16 +1,39 @@
 import React, { useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
-import { Building2, Shield, Users, CalendarDays, HeartPulse, Clock3, Banknote, BadgeDollarSign, Briefcase, Target, GraduationCap, Route, Headset, Database, Network, Workflow, Search } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
 import { Input } from './components/ui/input';
 import { Badge } from './components/ui/badge';
 import { Button } from './components/ui/button';
 
+const icons = {
+  foundation: '🏢',
+  'core-hr': '👥',
+  security: '🛡️',
+  absence: '🗓️',
+  benefits: '💗',
+  'time-labor': '⏱️',
+  payroll: '💵',
+  compensation: '🏅',
+  recruiting: '💼',
+  talent: '🎯',
+  learning: '🎓',
+  journeys: '🧭',
+  'help-desk': '🎧',
+  integration: '🗄️',
+};
+
+function Glyph({ id, className = '' }) {
+  return (
+    <span className={`inline-flex h-5 w-5 items-center justify-center text-sm ${className}`}>
+      {icons[id] || '⬢'}
+    </span>
+  );
+}
+
 const modules = [
   {
     id: 'foundation',
     title: 'Foundation',
-    icon: Building2,
+    icon: 'foundation',
     tier: 'Core Platform',
     summary: 'Enterprise structures, reference data, workforce structures, worker model, and extensibility.',
     color: 'from-slate-700 to-slate-900',
@@ -34,7 +57,7 @@ const modules = [
   {
     id: 'core-hr',
     title: 'Core HR',
-    icon: Users,
+    icon: 'core-hr',
     tier: 'System Backbone',
     summary: 'Worker lifecycle, work relationships, assignments, person records, hierarchies, and employment transactions.',
     color: 'from-blue-700 to-indigo-900',
@@ -56,7 +79,7 @@ const modules = [
   {
     id: 'security',
     title: 'Security',
-    icon: Shield,
+    icon: 'security',
     tier: 'Cross-Module Control',
     summary: 'Roles, data roles, security profiles, role provisioning, and access governance.',
     color: 'from-cyan-700 to-sky-900',
@@ -76,7 +99,7 @@ const modules = [
   {
     id: 'absence',
     title: 'Absence Management',
-    icon: CalendarDays,
+    icon: 'absence',
     tier: 'Workforce Operations',
     summary: 'Absence types, plans, enrollments, eligibility, accruals, balances, and formula-driven logic.',
     color: 'from-emerald-700 to-teal-900',
@@ -98,7 +121,7 @@ const modules = [
   {
     id: 'benefits',
     title: 'Benefits',
-    icon: HeartPulse,
+    icon: 'benefits',
     tier: 'Workforce Operations',
     summary: 'Programs, plans, options, life events, eligibility, enrollments, rates, and deductions.',
     color: 'from-rose-700 to-pink-900',
@@ -120,7 +143,7 @@ const modules = [
   {
     id: 'time-labor',
     title: 'Time and Labor',
-    icon: Clock3,
+    icon: 'time-labor',
     tier: 'Workforce Operations',
     summary: 'Time layouts, rules, time entry, schedules, approvals, calculated time, and payroll transfer.',
     color: 'from-amber-600 to-orange-900',
@@ -142,7 +165,7 @@ const modules = [
   {
     id: 'payroll',
     title: 'Payroll',
-    icon: Banknote,
+    icon: 'payroll',
     tier: 'Financial Workforce Processing',
     summary: 'Statutory context, payroll definitions, elements, balances, calculations, payments, and costing.',
     color: 'from-violet-700 to-purple-900',
@@ -164,7 +187,7 @@ const modules = [
   {
     id: 'compensation',
     title: 'Compensation',
-    icon: BadgeDollarSign,
+    icon: 'compensation',
     tier: 'Reward Management',
     summary: 'Salary basis, individual compensation, workforce compensation cycles, budgets, and approvals.',
     color: 'from-fuchsia-700 to-purple-900',
@@ -186,7 +209,7 @@ const modules = [
   {
     id: 'recruiting',
     title: 'Recruiting',
-    icon: Briefcase,
+    icon: 'recruiting',
     tier: 'Talent Acquisition',
     summary: 'Career sites, requisitions, candidate management, offers, and move-to-HR processes.',
     color: 'from-sky-700 to-blue-900',
@@ -208,7 +231,7 @@ const modules = [
   {
     id: 'talent',
     title: 'Talent Management',
-    icon: Target,
+    icon: 'talent',
     tier: 'Talent Development',
     summary: 'Profiles, performance, goals, succession, talent pools, career development, and calibration.',
     color: 'from-lime-700 to-green-900',
@@ -230,7 +253,7 @@ const modules = [
   {
     id: 'learning',
     title: 'Learning',
-    icon: GraduationCap,
+    icon: 'learning',
     tier: 'Talent Development',
     summary: 'Courses, offerings, activities, specializations, assignments, catalogs, and access rules.',
     color: 'from-green-700 to-emerald-900',
@@ -252,7 +275,7 @@ const modules = [
   {
     id: 'journeys',
     title: 'Journeys / Oracle ME',
-    icon: Route,
+    icon: 'journeys',
     tier: 'Employee Experience',
     summary: 'Journey templates, tasks, allocations, guided experiences, and event-driven employee actions.',
     color: 'from-indigo-700 to-blue-950',
@@ -274,7 +297,7 @@ const modules = [
   {
     id: 'help-desk',
     title: 'Help Desk / HR Service Delivery',
-    icon: Headset,
+    icon: 'help-desk',
     tier: 'Service Delivery',
     summary: 'Service requests, categories, queues, assignment rules, knowledge, and HR support workflows.',
     color: 'from-stone-700 to-neutral-900',
@@ -296,7 +319,7 @@ const modules = [
   {
     id: 'integration',
     title: 'Data / Integration / Reporting Layer',
-    icon: Database,
+    icon: 'integration',
     tier: 'Cross-Module Control',
     summary: 'HDL, extracts, APIs, BI Publisher, OTBI, audit, diagnostics, and cross-module data movement.',
     color: 'from-gray-700 to-zinc-950',
@@ -495,12 +518,9 @@ function ConnectionLayer({ selectedId, filteredIds }) {
 }
 
 function ModuleNode({ module, active, onClick }) {
-  const Icon = module.icon;
   const pos = positions[module.id];
   return (
-    <motion.button
-      whileHover={{ scale: 1.03, y: -2 }}
-      whileTap={{ scale: 0.99 }}
+    <button
       onClick={onClick}
       className={`absolute -translate-x-1/2 -translate-y-1/2 text-left ${active ? 'z-20' : 'z-10'}`}
       style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
@@ -508,7 +528,7 @@ function ModuleNode({ module, active, onClick }) {
       <div className={`w-56 rounded-3xl border p-4 shadow-2xl backdrop-blur-md transition-all ${active ? 'border-blue-400 bg-slate-900/95 ring-2 ring-blue-400/50' : 'border-white/10 bg-slate-950/80 hover:border-white/20'}`}>
         <div className="flex items-start gap-3">
           <div className={`rounded-2xl bg-gradient-to-br ${module.color} p-3 shadow-lg`}>
-            <Icon className="h-5 w-5 text-white" />
+            <Glyph id={module.icon} />
           </div>
           <div className="min-w-0">
             <div className="text-[11px] uppercase tracking-[0.22em] text-slate-400">{module.tier}</div>
@@ -516,7 +536,7 @@ function ModuleNode({ module, active, onClick }) {
           </div>
         </div>
       </div>
-    </motion.button>
+    </button>
   );
 }
 
@@ -554,7 +574,7 @@ export default function OracleFusionHCMEnterpriseMap() {
               </div>
               <div className="w-full max-w-sm">
                 <div className="relative">
-                  <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                  <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">🔎</span>
                   <Input
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
@@ -593,7 +613,7 @@ export default function OracleFusionHCMEnterpriseMap() {
             <CardHeader>
               <div className="flex items-start gap-3">
                 <div className={`rounded-2xl bg-gradient-to-br ${selected.color} p-3`}>
-                  <selected.icon className="h-5 w-5 text-white" />
+                  <Glyph id={selected.icon} />
                 </div>
                 <div>
                   <div className="text-xs uppercase tracking-[0.22em] text-slate-400">Selected Module</div>
@@ -607,7 +627,7 @@ export default function OracleFusionHCMEnterpriseMap() {
 
               <div>
                 <div className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-100">
-                  <Workflow className="h-4 w-4" /> Primary Setup Objects
+                  <span>🧩</span> Primary Setup Objects
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {selected.children.map((item) => (
@@ -619,7 +639,7 @@ export default function OracleFusionHCMEnterpriseMap() {
               <div className="grid grid-cols-1 gap-4">
                 <div className="rounded-2xl border border-white/10 bg-slate-900/70 p-4">
                   <div className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-100">
-                    <Network className="h-4 w-4" /> Upstream Dependencies
+                    <span>🕸️</span> Upstream Dependencies
                   </div>
                   {dependencyChain.length ? (
                     <div className="flex flex-wrap gap-2">
@@ -634,7 +654,7 @@ export default function OracleFusionHCMEnterpriseMap() {
 
                 <div className="rounded-2xl border border-white/10 bg-slate-900/70 p-4">
                   <div className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-100">
-                    <Database className="h-4 w-4" /> Downstream Consumers
+                    <span>🗄️</span> Downstream Consumers
                   </div>
                   {downstream.length ? (
                     <div className="flex flex-wrap gap-2">
