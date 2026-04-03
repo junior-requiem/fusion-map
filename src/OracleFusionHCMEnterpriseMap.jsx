@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Building2, Shield, Users, CalendarDays, HeartPulse, Clock3, Banknote, BadgeDollarSign, Briefcase, Target, GraduationCap, Route, Headset, Database, Network, Workflow, Search } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
+import { Input } from './components/ui/input';
+import { Badge } from './components/ui/badge';
+import { Button } from './components/ui/button';
 
 const modules = [
   {
