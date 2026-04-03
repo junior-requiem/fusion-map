@@ -24,3 +24,9 @@ This repository contains an interactive Oracle Fusion HCM enterprise architectur
 npm run build
 npm run preview
 ```
+
+## Deploying to GitHub Pages
+
+This app is configured with `base: "/fusion-map/"` in `vite.config.js` so assets resolve correctly when hosted at `https://junior-requiem.github.io/fusion-map/`.
+
+If you rename the repository, update the `base` value to match the new repo path.
