@@ -31,7 +31,7 @@ This app is configured with `base: "/fusion-map/"` in `vite.config.js` so assets
 
 Deployment is automated through `.github/workflows/deploy.yml`:
 
-- Every push to `main` builds the app and publishes `dist/` to GitHub Pages.
+- Every push to the repository's default branch builds the app and publishes `dist/` to GitHub Pages.
 - You can also trigger deployment manually from the **Actions** tab via **workflow_dispatch**.
 
 ### One-time repository setup
